@@ -89,7 +89,23 @@ button {
 }
 
 #total {
-  font-size:20px; /* larger total */
+  font-size: 20px;
+}
+
+#summary {
+  margin-top: 10px;
+}
+
+#summary-name {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.summary-item {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
 .footer button {
@@ -315,9 +331,16 @@ function goConfirm() {
   const summary = document.getElementById("summary");
   summary.innerHTML = "";
 
+  const customerName = document.getElementById("customerName").value;
+  const nameDiv = document.createElement("div");
+  nameDiv.id = "summary-name";
+  nameDiv.textContent = customerName ? customerName : "(No name entered)";
+  summary.appendChild(nameDiv);
+
   for (let name in cart) {
     const item = findItem(name);
     const div = document.createElement("div");
+    div.className = "summary-item";
     div.textContent = `${name} x${cart[name]} - £${(item.price * cart[name]).toFixed(2)}`;
     summary.appendChild(div);
   }
