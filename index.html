@@ -393,16 +393,10 @@ function submitOrder() {
   });
 }
 function deleteOrder() {
-  // 1. Clear the cart object
   cart = {}; 
-  
-  // 2. Refresh the menu UI to show 0 quantities
+  document.getElementById("orderNotes").value = ""; // Clears the textarea
   renderMenu(); 
-  
-  // 3. Update the footer totals to £0.00
   updateFooter(); 
-  
-  // 4. Return to the main menu screen
   goBack(); 
 }
 // 1. Function to save the current cart and name
