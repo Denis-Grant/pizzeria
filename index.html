@@ -162,7 +162,7 @@ input {
 
 <body>
 <div id="nameReminder" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#3498db; color:white; padding:12px 24px; border-radius:30px; z-index:1000; font-weight:700; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
-  Please add your name.
+  Please add your name
 </div>
 <div id="statusToast" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#76ba1b; color:white; padding:12px 24px; border-radius:30px; z-index:1000; font-weight:700; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
   Order Saved!
@@ -398,16 +398,20 @@ function showNameReminder() {
   const nameInput = document.getElementById("customerName");
   const reminder = document.getElementById("nameReminder");
 
-  // Only show the reminder if the name field is empty
+  // Only trigger if the name field is actually empty
   if (!nameInput.value.trim()) {
     reminder.style.display = "block";
     
-    // Optional: Hide the reminder as soon as the user starts typing
-    nameInput.addEventListener('input', () => {
+    // Hide it automatically after 3 seconds
+    setTimeout(() => {
       reminder.style.display = "none";
-    }, { once: true });
+    }, 3000);
   }
 }
+
+// Trigger this immediately after the app starts up
+loadSavedOrder();
+showNameReminder();
 
 // Trigger the check after the app has finished loading saved data
 loadSavedOrder();
