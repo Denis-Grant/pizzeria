@@ -336,7 +336,7 @@ function goConfirm() {
   const customerName = document.getElementById("customerName").value;
   const nameDiv = document.createElement("div");
   nameDiv.id = "summary-name";
-  nameDiv.textContent = customerName ? customerName : "(No name entered)";
+  nameDiv.textContent = `Customer: ${customerName ? customerName : "(No name entered)"}.`;
   nameDiv.style.textTransform = "capitalize";
   nameDiv.style.textDecoration = "underline";
   nameDiv.style.fontWeight = "normal"
