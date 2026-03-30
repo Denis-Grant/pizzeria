@@ -163,7 +163,7 @@ function renderMenu() {
         <div class="controls">
           <button class="remove" onclick="updateQty('${item.name}', -1)">-</button>
           <span class="qty">${cart[item.name] || 0}</span>
-          <button class="add" onclick="updateQty('${item.name}', 1)">+</button>
+          <button class="add" onclick='updateQty("${item.name}", 1)'>+</button>
         </div>`;
       menuDiv.appendChild(div);
     });
