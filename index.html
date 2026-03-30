@@ -4,267 +4,139 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pizzeria Menu</title>
-
 <link href="https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap" rel="stylesheet">
-
 <style>
 * { box-sizing: border-box; }
-
-body {
-  font-family: 'PT Sans Narrow', sans-serif;
-  margin:0;
-  background:#121618;
-  color:#fff;
-}
-
-.container { 
-  padding:16px; 
-  padding-bottom:90px; /* prevents footer overlap */
-}
-
-h2 {
-  margin-top:24px;
-  background:#ffc850 !important;
-  color:#000;
-  padding:8px 12px;
-  border-radius:8px;
-  font-weight:700;
-}
-
-.item {
-  background:#1D2326;
-  padding:12px;
-  border-radius:12px;
-  margin-bottom:10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
+body { font-family: 'PT Sans Narrow', sans-serif; margin:0; background:#121618; color:#fff; }
+.container { padding:16px; padding-bottom:90px; }
+h2 { margin-top:24px; background:#ffc850 !important; color:#000; padding:8px 12px; border-radius:8px; font-weight:700; text-transform: uppercase; }
+.item { background:#1D2326; padding:12px; border-radius:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
 .info { max-width:70%; }
-
 .name { font-weight:700; }
-
 .price { color:#ccc; }
-
 .controls { display:flex; align-items:center; gap:8px; }
-
-button {
-  border:none;
-  border-radius:50%;
-  width:36px;
-  height:36px;
-  font-size:18px;
-  cursor:pointer;
-}
-
-.add {
-  background:#ffc850;
-  color:#000;
-}
-
-.remove {
-  background:#333;
-  color:#fff;
-}
-
-.qty {
-  font-weight:bold;
-  min-width:20px;
-  text-align:center;
-}
-
-.footer {
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#ffc850;
-  color:#000;
-  padding:12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-weight:700;
-}
-
-#total {
-  font-size: 20px;
-}
-
-#summary {
-  margin-top: 10px;
-}
-
-#summary-name {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 14px;
-}
-
-.summary-item {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.footer button {
-  background:#000;
-  color:#ffc850;
-  border-radius:50%;
-  width:40px;
-  height:40px;
-  font-size:20px;
-}
-
+button { border:none; border-radius:50%; width:36px; height:36px; font-size:18px; cursor:pointer; }
+.add { background:#ffc850; color:#000; }
+.remove { background:#333; color:#fff; }
+.qty { font-weight:bold; min-width:20px; text-align:center; }
+.footer { position:fixed; bottom:0; left:0; right:0; background:#ffc850; color:#000; padding:12px; display:flex; justify-content:space-between; align-items:center; font-weight:700; z-index: 1001; }
+#total { font-size: 20px; }
+#summary-name { font-size: 22px; font-weight: 700; margin-bottom: 14px; }
+.summary-item { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.footer button { background:#000; color:#ffc850; border-radius:50%; width:40px; height:40px; font-size:20px; }
 .hidden { display:none; }
-
-input {
-  width:100%;
-  padding:12px 12px;
-  margin-bottom:12px;
-  /* border-radius:8px; */
-  border:none;
-  font-family: 'PT Sans Narrow', sans-serif;
-  font-size:18px;
-  height:36px;
-}
-
-.confirm-buttons {
-  display:flex;
-  gap:10px;
-  margin-top:16px;
-}
-
-.confirm-buttons button {
-  flex:1;
-  padding:12px;
-  border-radius:8px;
-  font-weight:700;
-  font-size:16px;
-}
-
-.submit-btn {
-  background:#ffc850;
-  color:#000;
-}
-
-.back-btn {
-  background:#2a3236;
-  color:#fff;
-  /* border:1px solid #ffc850; */
-}
-.confirm-buttons {
-  margin-top: 20px;
-}
+input { width:100%; padding:12px; margin-bottom:12px; border-radius:12px; border:none; font-family: 'PT Sans Narrow', sans-serif; font-size:18px; height:45px; background: #fff; color: #000; }
+.confirm-buttons { display:flex; gap:10px; margin-top:20px; flex-direction: column; }
+.back-btn { background:#2a3236; color:#fff; padding:12px; border-radius:8px; font-weight:700; flex:1; border: 1px solid transparent; }
+.submit-btn { background:#76bf12; color:#fff; padding:12px; border-radius:8px; font-weight:700; width: 100%; margin-top: 10px; }
 </style>
 </head>
-
 <body>
-<div id="nameReminder" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#3498db; color:white; padding:12px 24px; border-radius:30px; z-index:1000; font-weight:700; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+
+<div id="nameReminder" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#3498db; color:white; padding:12px 24px; border-radius:30px; z-index:2000; font-weight:700; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
   Please add your name
 </div>
-<div id="statusToast" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#76ba1b; color:white; padding:12px 24px; border-radius:30px; z-index:1000; font-weight:700; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+
+<div id="statusToast" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#76ba1b; color:white; padding:12px 24px; border-radius:30px; z-index:2000; font-weight:700; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
   Order Saved!
 </div>
+
 <div class="container" id="menuScreen">
   <h2>Your Name</h2>
-  <input type="text" style="border-radius: 12px" id="customerName" placeholder="Enter your name (or family name)" />
+  <input type="text" id="customerName" placeholder="Enter your name (or family name)" />
   <div id="menu"></div>
 </div>
 
 <div class="container hidden" id="confirmScreen">
   <h2>Order Details</h2>
   <div id="summary"></div>
-  <div style="margin-top:20px; color:#e85d5d; font-size:18px;">DRINKS NOT INCLUDED IN TOTAL</div>
-  <textarea id="orderNotes" 
-    placeholder="Any drinks or special requests to add to your notes?" 
-    style="width:100%; height:100px; padding:12px; background:#1D2326; color:#fff; border:1px solid #333; border-radius:12px; font-family: 'PT Sans Narrow', sans-serif; font-size:18px; resize:none; outline:none; margin-top:10px;"></textarea>
- <div class="confirm-buttons" style="flex-direction: column;">
-  <div style="display: flex; gap: 10px; width: 100%;">
-    <button class="back-btn" onclick="goBack()" style="color: #fff;">Menu</button>
-    <button class="back-btn" style="border-color: #e85d5d; color: #e85d5d;" onclick="deleteOrder()">Delete</button>
+  <div style="margin-top:20px; color:#e85d5d; font-size:18px; font-weight:700;">DRINKS NOT INCLUDED IN TOTAL</div>
+  <textarea id="orderNotes" placeholder="Any drinks or special requests to add to your notes?" style="width:100%; height:100px; padding:12px; background:#1D2326; color:#fff; border:1px solid #333; border-radius:12px; font-family: 'PT Sans Narrow', sans-serif; font-size:18px; resize:none; outline:none; margin-top:10px;"></textarea>
+  
+  <div class="confirm-buttons">
+    <div style="display: flex; gap: 10px; width: 100%;">
+      <button class="back-btn" onclick="goBack()">Menu</button>
+      <button class="back-btn" style="border-color: #e85d5d; color: #e85d5d;" onclick="deleteOrder()">Delete</button>
+    </div>
+    <button class="submit-btn" onclick="saveOrder()">Save</button>
   </div>
-  <button class="submit-btn" style="width: 100%; margin-top: 10px; background-color: #76bf12; color: #fff" onclick="saveOrder()">Save</button>
-</div>
-</div>
 </div>
 
 <div class="footer">
   <div id="count">0 items</div>
   <div id="total">£0.00</div>
-   <button onclick="goConfirm()">➜</button>
+  <button onclick="goConfirm()">➜</button>
 </div>
 
 <script>
-const webhookURL = "https://vmi2930391.contaboserver.net/webhook/968330cd-d7a1-45c6-a799-1cd1531fcf78";
-
 const data = {
-"ANTIPASTI": [
-{ "name": "Soup of the Day", "price": 5.9 },
-{ "name": "Marinated Olives", "price": 3.9 },
-{ "name": "Tomato Bread", "price": 4.5 },
-{ "name": "Garlic Bread / Optional Cheese", "price": 4.5 },
-{ "name": "Bruschetta with Burrata and N'Duja", "price": 7.9 },
-{ "name": "Insalata Fantasia", "price": 8.3 },
-{ "name": "Insalata Tricolore", "price": 8.9 },
-{ "name": "Melenzane Parmigiana", "price": 8.9 },
-{ "name": "Avocado Prawns", "price": 9.2 },
-{ "name": "Burrata Salad", "price": 9.9 },
-{ "name": "Charcuterie Board", "price": 11.9 },
-{ "name": "Prawns in Garlic", "price": 9.9 },
-{ "name": "Deep Fried Calamari", "price": 9.6 },
-{ "name": "Mussels", "price": 9.9 },
-{ "name": "Nicoise Salad", "price": 11.9 }
-],
-"MIXED SALAD": [
-{ "name": "Mixed Salad", "price": 6.5 },
-{ "name": "Tomato Salad with Red Onions", "price": 6.5 },
-{ "name": "Rocket Salad", "price": 6.5 }
-],
-"EXTRA TOPPINGS": [
-{ "name": "Vegetables", "price": 1.6 },
-{ "name": "Meat", "price": 2.4 },
-{ "name": "Cheeses", "price": 2.4 },
-{ "name": "Fish", "price": 2.4 }
-],
-"PIZZA": [
-{ "name": "Margherita", "price": 10.9 },
-{ "name": "Napoletana", "price": 12.8 },
-{ "name": "Pugliese", "price": 13.9 },
-{ "name": "Quattro Stagione", "price": 14.2 },
-{ "name": "Vesuvio", "price": 13.5 },
-{ "name": "Capricciosa", "price": 14.2 },
-{ "name": "Parmigiana", "price": 12.9 },
-{ "name": "American Hot", "price": 14.2 },
-{ "name": "Siciliana", "price": 13.9 },
-{ "name": "La Reine", "price": 12.9 },
-{ "name": "Quattro Formaggi", "price": 14.2 },
-{ "name": "Pizza Mediterraneo", "price": 13.9 },
-{ "name": "Vegeteriana", "price": 13.7 },
-{ "name": "Chicken Pizza", "price": 13.9 },
-{ "name": "Pizza Cecco", "price": 13.4 },
-{ "name": "Pizza Burrata", "price": 14.2 },
-{ "name": "Pizza Chef", "price": 14.9 },
-{ "name": "Pizza Tutto Mare", "price": 14.9 },
-{ "name": "Calzone Spinach", "price": 13.5 },
-{ "name": "Pizza Nduja", "price": 13.9 }
-],
-"PASTA": [
-{ "name": "Spaghetti Bolognese", "price": 12.9 },
-{ "name": "Penne Carbonara", "price": 12.9 },
-{ "name": "Lasagna al Forno", "price": 13.9 },
-{ "name": "Spaghetti Marinara", "price": 15.9 },
-{ "name": "Spaghetti Gamberoni", "price": 15.9 },
-{ "name": "Penne All'Amatriciana", "price": 12.9 },
-{ "name": "Rigatoni alla Bosciaola", "price": 13.9 },
-{ "name": "Spaghetti alla Vongole", "price": 12.9 },
-{ "name": "Rigatoni Aurora", "price": 13.9 },
-{ "name": "Spaghetti Pesto", "price": 11.9 },
-{ "name": "Grilled Fillet of Seabass", "price": 21.5 },
-{ "name": "Grilled Sirloin Steak", "price": 21.9 },
-{ "name": "Chicken Milanese", "price": 18.5 }
-]
+  "ANTIPASTI": [
+    { "name": "Avocado Prawns", "price": 9.2 },
+    { "name": "Bruschetta with Burrata and N'Duja", "price": 7.9 },
+    { "name": "Burrata Salad", "price": 9.9 },
+    { "name": "Charcuterie Board", "price": 11.9 },
+    { "name": "Deep Fried Calamari", "price": 9.6 },
+    { "name": "Garlic Bread / Optional Cheese", "price": 4.5 },
+    { "name": "Insalata Fantasia", "price": 8.3 },
+    { "name": "Insalata Tricolore", "price": 8.9 },
+    { "name": "Marinated Olives", "price": 3.9 },
+    { "name": "Melenzane Parmigiana", "price": 8.9 },
+    { "name": "Mussels", "price": 9.9 },
+    { "name": "Nicoise Salad", "price": 11.9 },
+    { "name": "Prawns in Garlic", "price": 9.5 },
+    { "name": "Soup of the Day", "price": 5.9 },
+    { "name": "Tomato Bread", "price": 4.5 }
+  ],
+  "SALAD": [
+    { "name": "Mixed Salad", "price": 6.5 },
+    { "name": "Rocket Salad", "price": 6.5 },
+    { "name": "Tomato Salad with Red Onions", "price": 6.5 }
+  ],
+  "EXTRA TOPPINGS": [
+    { "name": "Cheeses", "price": 2.4 },
+    { "name": "Fish", "price": 2.4 },
+    { "name": "Meat", "price": 2.4 },
+    { "name": "Vegetables", "price": 1.6 }
+  ],
+  "PIZZA": [
+    { "name": "American Hot", "price": 14.2 },
+    { "name": "Calzone Spinach", "price": 13.5 },
+    { "name": "Capricciosa", "price": 14.2 },
+    { "name": "Chicken Pizza", "price": 13.9 },
+    { "name": "La Reine", "price": 12.9 },
+    { "name": "Margherita", "price": 10.9 },
+    { "name": "Napoletana", "price": 12.8 },
+    { "name": "Parmigiana", "price": 12.9 },
+    { "name": "Pizza Burrata", "price": 14.2 },
+    { "name": "Pizza Cecco", "price": 13.4 },
+    { "name": "Pizza Chef", "price": 14.9 },
+    { "name": "Pizza Mediterraneo", "price": 13.9 },
+    { "name": "Pizza Nduja", "price": 13.9 },
+    { "name": "Pizza Tutto Mare", "price": 14.9 },
+    { "name": "Pugliese", "price": 13.9 },
+    { "name": "Quattro Formaggi", "price": 14.2 },
+    { "name": "Quattro Stagione", "price": 14.2 },
+    { "name": "Siciliana", "price": 13.9 },
+    { "name": "Vegeteriana", "price": 13.7 },
+    { "name": "Vesuvio", "price": 13.5 }
+  ],
+  "PASTA": [
+    { "name": "Lasagna al Forno", "price": 13.9 },
+    { "name": "Penne All'Amatriciana", "price": 12.9 },
+    { "name": "Penne Carbonara", "price": 12.9 },
+    { "name": "Rigatoni alla Bosciaola", "price": 13.9 },
+    { "name": "Rigatoni Aurora", "price": 13.9 },
+    { "name": "Spaghetti alla Vongole", "price": 12.9 },
+    { "name": "Spaghetti Bolognese", "price": 12.9 },
+    { "name": "Spaghetti Gamberoni", "price": 15.9 },
+    { "name": "Spaghetti Marinara", "price": 15.9 },
+    { "name": "Spaghetti Pesto", "price": 11.9 }
+  ],
+  "MEAT / FISH": [
+    { "name": "Chicken Milanese", "price": 18.5 },
+    { "name": "Grilled Fillet of Seabass", "price": 21.5 },
+    { "name": "Grilled Sirloin Steak", "price": 21.9 }
+  ]
 };
 
 let cart = {};
@@ -272,39 +144,23 @@ let cart = {};
 function renderMenu() {
   const menuDiv = document.getElementById("menu");
   menuDiv.innerHTML = "";
-
   for (let category in data) {
     const h = document.createElement("h2");
     h.textContent = category;
     menuDiv.appendChild(h);
-
     data[category].forEach(item => {
       const div = document.createElement("div");
       div.className = "item";
-
-      const info = document.createElement("div");
-      info.className = "info";
-      info.innerHTML = `<div class='name'>${item.name}</div><div class='price'>£${item.price.toFixed(2)}</div>`;
-
-      const controls = document.createElement("div");
-      controls.className = "controls";
-
-      const minus = document.createElement("button");
-      minus.textContent = "-";
-      minus.className = "remove";
-      minus.onclick = () => updateQty(item.name, -1);
-
-      const qty = document.createElement("span");
-      qty.className = "qty";
-      qty.textContent = cart[item.name] || 0;
-
-      const plus = document.createElement("button");
-      plus.textContent = "+";
-      plus.className = "add";
-      plus.onclick = () => updateQty(item.name, 1);
-
-      controls.append(minus, qty, plus);
-      div.append(info, controls);
+      div.innerHTML = `
+        <div class="info">
+          <div class="name">${item.name}</div>
+          <div class="price">£${item.price.toFixed(2)}</div>
+        </div>
+        <div class="controls">
+          <button class="remove" onclick="updateQty('${item.name}', -1)">-</button>
+          <span class="qty">${cart[item.name] || 0}</span>
+          <button class="add" onclick="updateQty('${item.name}', 1)">+</button>
+        </div>`;
       menuDiv.appendChild(div);
     });
   }
@@ -318,15 +174,12 @@ function updateQty(name, change) {
 }
 
 function updateFooter() {
-  let count = 0;
-  let total = 0;
-
+  let count = 0, total = 0;
   for (let name in cart) {
     const item = findItem(name);
     count += cart[name];
     total += cart[name] * item.price;
   }
-
   document.getElementById("count").textContent = `${count} items`;
   document.getElementById("total").textContent = `£${total.toFixed(2)}`;
 }
@@ -341,27 +194,19 @@ function findItem(name) {
 function goConfirm() {
   document.getElementById("menuScreen").classList.add("hidden");
   document.getElementById("confirmScreen").classList.remove("hidden");
-
   const summary = document.getElementById("summary");
   summary.innerHTML = "";
-
-  const customerName = document.getElementById("customerName").value;
+  const name = document.getElementById("customerName").value;
   const nameDiv = document.createElement("div");
   nameDiv.id = "summary-name";
-  nameDiv.textContent = `CUSTOMER: ${customerName ? customerName : "(No name entered)"}`;
-  nameDiv.style.textTransform = "capitalize";
-  // nameDiv.style.textDecoration = "underline";
-  nameDiv.style.fontWeight = "normal"
-  nameDiv.style.color = "#76ba1b"; 
+  nameDiv.style.color = "#76ba1b";
+  nameDiv.textContent = `CUSTOMER: ${name || "(No name entered)"}`;
   summary.appendChild(nameDiv);
-
-  for (let name in cart) {
-    const item = findItem(name);
+  for (let n in cart) {
+    const item = findItem(n);
     const div = document.createElement("div");
     div.className = "summary-item";
-    const category = Object.keys(data).find(cat => data[cat].some(i => i.name === name));
-    const isExtra = category === "EXTRA TOPPINGS";
-    div.textContent = `${name} x ${cart[name]} - £${(item.price * cart[name]).toFixed(2)}${isExtra ? " (Extra toppings)" : ""}`;
+    div.textContent = `${n} x ${cart[n]} - £${(item.price * cart[n]).toFixed(2)}`;
     summary.appendChild(div);
   }
 }
@@ -371,95 +216,52 @@ function goBack() {
   document.getElementById("confirmScreen").classList.add("hidden");
 }
 
-function submitOrder() {
-  const name = document.getElementById("customerName").value;
-  const items = [];
-  let total = 0;
-
-  for (let n in cart) {
-    const item = findItem(n);
-    items.push({ name: n, qty: cart[n], price: item.price });
-    total += cart[n] * item.price;
-  }
-
-  fetch(webhookURL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, items, total })
-  }).then(() => {
-    alert("Order submitted!");
-    cart = {};
-    goBack();
-    renderMenu();
-    updateFooter();
-  });
-}
-function showNameReminder() {
-  const nameInput = document.getElementById("customerName");
-  const reminder = document.getElementById("nameReminder");
-
-  // Only trigger if the name field is actually empty
-  if (!nameInput.value.trim()) {
-    reminder.style.display = "block";
-    
-    // Hide it automatically after 3 seconds
-    setTimeout(() => {
-      reminder.style.display = "none";
-    }, 3000);
-  }
-}
-
-// Trigger this immediately after the app starts up
-loadSavedOrder();
-showNameReminder();
-
-// Trigger the check after the app has finished loading saved data
-loadSavedOrder();
-showNameReminder();
 function deleteOrder() {
-  cart = {}; 
-  document.getElementById("orderNotes").value = ""; // Clears the textarea
-  renderMenu(); 
-  updateFooter(); 
-  goBack(); 
+  cart = {};
+  document.getElementById("orderNotes").value = "";
+  renderMenu();
+  updateFooter();
+  goBack();
 }
-// 1. Function to save the current cart and name
+
 function saveOrder() {
-  const customerName = document.getElementById("customerName").value;
-  const notes = document.getElementById("orderNotes").value;
-  
   const saveData = {
-    name: customerName,
-    notes: notes,
+    name: document.getElementById("customerName").value,
+    notes: document.getElementById("orderNotes").value,
     cart: cart
   };
-  
   localStorage.setItem("pizzeria_saved_order", JSON.stringify(saveData));
-
   const toast = document.getElementById("statusToast");
   toast.style.display = "block";
   setTimeout(() => { toast.style.display = "none"; }, 2000);
 }
 
-// 2. Function to retrieve data when the page opens
 function loadSavedOrder() {
   const savedRaw = localStorage.getItem("pizzeria_saved_order");
   if (savedRaw) {
-    const savedData = JSON.parse(savedRaw);
-    document.getElementById("customerName").value = savedData.name || "";
-    document.getElementById("orderNotes").value = savedData.notes || ""; // Restores notes
-    cart = savedData.cart || {};
+    const data = JSON.parse(savedRaw);
+    document.getElementById("customerName").value = data.name || "";
+    document.getElementById("orderNotes").value = data.notes || "";
+    cart = data.cart || {};
     renderMenu();
     updateFooter();
   }
 }
 
-// 3. Trigger the load function immediately on page startup
-loadSavedOrder();
+function showNameReminder() {
+  if (!document.getElementById("customerName").value.trim()) {
+    const reminder = document.getElementById("nameReminder");
+    reminder.style.display = "block";
+    setTimeout(() => { reminder.style.display = "none"; }, 3000);
+  }
+}
 
-renderMenu();
-updateFooter();
+window.onload = () => {
+  loadSavedOrder();
+  showNameReminder();
+  renderMenu();
+  updateFooter();
+};
 </script>
-
 </body>
 </html>
