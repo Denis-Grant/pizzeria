@@ -408,35 +408,29 @@ function deleteOrder() {
 // 1. Function to save the current cart and name
 function saveOrder() {
   const customerName = document.getElementById("customerName").value;
+  const notes = document.getElementById("orderNotes").value;
+  
   const saveData = {
     name: customerName,
+    notes: notes,
     cart: cart
   };
   
   localStorage.setItem("pizzeria_saved_order", JSON.stringify(saveData));
 
-  // Show the custom toast instead of alert()
   const toast = document.getElementById("statusToast");
   toast.style.display = "block";
-  
-  // Hide it automatically after 2 seconds
-  setTimeout(() => {
-    toast.style.display = "none";
-  }, 2000);
+  setTimeout(() => { toast.style.display = "none"; }, 2000);
 }
 
 // 2. Function to retrieve data when the page opens
 function loadSavedOrder() {
   const savedRaw = localStorage.getItem("pizzeria_saved_order");
-  
   if (savedRaw) {
     const savedData = JSON.parse(savedRaw);
-    
-    // Restore the name and the cart object
     document.getElementById("customerName").value = savedData.name || "";
+    document.getElementById("orderNotes").value = savedData.notes || ""; // Restores notes
     cart = savedData.cart || {};
-    
-    // Refresh the UI to show the restored items
     renderMenu();
     updateFooter();
   }
