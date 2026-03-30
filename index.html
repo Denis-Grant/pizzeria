@@ -349,7 +349,7 @@ function goConfirm() {
     div.className = "summary-item";
     const category = Object.keys(data).find(cat => data[cat].some(i => i.name === name));
     const isExtra = category === "EXTRA TOPPINGS";
-    div.textContent = `${name} x${cart[name]} - £${(item.price * cart[name]).toFixed(2)}${isExtra ? " (Extra toppings)" : ""}`;
+    div.textContent = `${name} x ${cart[name]} - £${(item.price * cart[name]).toFixed(2)}${isExtra ? " (Extra toppings)" : ""}`;
     summary.appendChild(div);
   }
 }
