@@ -371,20 +371,6 @@ function submitOrder() {
     total += cart[n] * item.price;
   }
 
-  function deleteOrder() {
-  // 1. Clear the cart object
-  cart = {}; 
-  
-  // 2. Refresh the menu UI to show 0 quantities
-  renderMenu(); 
-  
-  // 3. Update the footer totals to £0.00
-  updateFooter(); 
-  
-  // 4. Return to the main menu screen
-  goBack(); 
-}
-
   fetch(webhookURL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -396,6 +382,19 @@ function submitOrder() {
     renderMenu();
     updateFooter();
   });
+}
+function deleteOrder() {
+  // 1. Clear the cart object
+  cart = {}; 
+  
+  // 2. Refresh the menu UI to show 0 quantities
+  renderMenu(); 
+  
+  // 3. Update the footer totals to £0.00
+  updateFooter(); 
+  
+  // 4. Return to the main menu screen
+  goBack(); 
 }
 
 renderMenu();
