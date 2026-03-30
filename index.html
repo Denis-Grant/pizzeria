@@ -162,6 +162,9 @@ input {
 
 <body>
 
+<div id="statusToast" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#76ba1b; color:white; padding:12px 24px; border-radius:30px; z-index:1000; font-weight:700; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+  Order Saved!
+</div>
 <div class="container" id="menuScreen">
   <h2>Your Name</h2>
   <input type="text" id="customerName" placeholder="Enter your name (or family name)" />
@@ -407,9 +410,16 @@ function saveOrder() {
     cart: cart
   };
   
-  // Save to browser storage as a string
   localStorage.setItem("pizzeria_saved_order", JSON.stringify(saveData));
-  alert("Order saved! You can close the page now.");
+
+  // Show the custom toast instead of alert()
+  const toast = document.getElementById("statusToast");
+  toast.style.display = "block";
+  
+  // Hide it automatically after 2 seconds
+  setTimeout(() => {
+    toast.style.display = "none";
+  }, 2000);
 }
 
 // 2. Function to retrieve data when the page opens
