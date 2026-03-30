@@ -17,7 +17,10 @@ body {
   color:#fff;
 }
 
-.container { padding:16px; padding-bottom:90px; }
+.container { 
+  padding:16px; 
+  padding-bottom:90px; /* prevents footer overlap */
+}
 
 h2 {
   margin-top:24px;
@@ -39,7 +42,9 @@ h2 {
 }
 
 .info { max-width:70%; }
+
 .name { font-weight:700; }
+
 .price { color:#ccc; }
 
 .controls { display:flex; align-items:center; gap:8px; }
@@ -53,10 +58,21 @@ button {
   cursor:pointer;
 }
 
-.add { background:#ffc850; color:#000; }
-.remove { background:#333; color:#fff; }
+.add {
+  background:#ffc850;
+  color:#000;
+}
 
-.qty { font-weight:bold; min-width:20px; text-align:center; }
+.remove {
+  background:#333;
+  color:#fff;
+}
+
+.qty {
+  font-weight:bold;
+  min-width:20px;
+  text-align:center;
+}
 
 .footer {
   position:fixed;
@@ -72,7 +88,25 @@ button {
   font-weight:700;
 }
 
-#total { font-size:20px; }
+#total {
+  font-size: 20px;
+}
+
+#summary {
+  margin-top: 10px;
+}
+
+#summary-name {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.summary-item {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
 
 .footer button {
   background:#000;
@@ -80,7 +114,10 @@ button {
   border-radius:50%;
   width:40px;
   height:40px;
+  font-size:20px;
 }
+
+.hidden { display:none; }
 
 input {
   width:100%;
@@ -93,36 +130,31 @@ input {
   height:36px;
 }
 
-#summary-name {
-  font-size:22px;
-  font-weight:700;
-  text-transform:uppercase;
-  text-decoration:underline;
-  margin-bottom:10px;
-}
-
-.summary-item {
-  font-size:22px;
-  font-weight:700;
-  margin-bottom:6px;
-}
-
 .confirm-buttons {
   display:flex;
   gap:10px;
-  margin-top:30px;
+  margin-top:16px;
 }
 
-.back-btn {
+.confirm-buttons button {
   flex:1;
   padding:12px;
   border-radius:8px;
+  font-weight:700;
+  font-size:16px;
+}
+
+.submit-btn {
+  background:#ffc850;
+  color:#000;
+}
+
+.back-btn {
   background:#1D2326;
   color:#fff;
   border:1px solid #ffc850;
 }
 
-.hidden { display:none; }
 </style>
 </head>
 
@@ -130,7 +162,7 @@ input {
 
 <div class="container" id="menuScreen">
   <h2>Your Name</h2>
-  <input type="text" id="customerName" placeholder="Enter your name (or family name)" />
+  <input type="text" id="customerName" placeholder="Enter your name" />
   <div id="menu"></div>
 </div>
 
@@ -140,6 +172,7 @@ input {
 
   <div class="confirm-buttons">
     <button class="back-btn" onclick="goBack()">Back</button>
+    <button class="submit-btn" onclick="submitOrder()">Submit</button>
   </div>
 </div>
 
@@ -152,7 +185,73 @@ input {
 <script>
 const webhookURL = "https://vmi2930391.contaboserver.net/webhook/968330cd-d7a1-45c6-a799-1cd1531fcf78";
 
-const data = window.data || {};
+const data = {
+"ANTIPASTI": [
+{ "name": "Soup of the Day", "price": 5.9 },
+{ "name": "Marinated Olives", "price": 3.9 },
+{ "name": "Tomato Bread", "price": 4.5 },
+{ "name": "Garlic Bread / Optional Cheese", "price": 4.5 },
+{ "name": "Bruschetta with Burrata and N'Duja", "price": 7.9 },
+{ "name": "Insalata Fantasia", "price": 8.3 },
+{ "name": "Insalata Tricolore", "price": 8.9 },
+{ "name": "Melenzane Parmigiana", "price": 8.9 },
+{ "name": "Avocado Prawns", "price": 9.2 },
+{ "name": "Burrata Salad", "price": 9.9 },
+{ "name": "Charcuterie Board", "price": 11.9 },
+{ "name": "Prawns in Garlic", "price": 9.9 },
+{ "name": "Deep Fried Calamari", "price": 9.6 },
+{ "name": "Mussels", "price": 9.9 },
+{ "name": "Nicoise Salad", "price": 11.9 }
+],
+"MIXED SALAD": [
+{ "name": "Mixed Salad", "price": 6.5 },
+{ "name": "Tomato Salad with Red Onions", "price": 6.5 },
+{ "name": "Rocket Salad", "price": 6.5 }
+],
+"EXTRA TOPPINGS": [
+{ "name": "Vegetables", "price": 1.6 },
+{ "name": "Meat", "price": 2.4 },
+{ "name": "Cheeses", "price": 2.4 },
+{ "name": "Fish", "price": 2.4 }
+],
+"PIZZA": [
+{ "name": "Margherita", "price": 10.9 },
+{ "name": "Napoletana", "price": 12.8 },
+{ "name": "Pugliese", "price": 13.9 },
+{ "name": "Quattro Stagione", "price": 14.2 },
+{ "name": "Vesuvio", "price": 13.5 },
+{ "name": "Capricciosa", "price": 14.2 },
+{ "name": "Parmigiana", "price": 12.9 },
+{ "name": "American Hot", "price": 14.2 },
+{ "name": "Siciliana", "price": 13.9 },
+{ "name": "La Reine", "price": 12.9 },
+{ "name": "Quattro Formaggi", "price": 14.2 },
+{ "name": "Pizza Mediterraneo", "price": 13.9 },
+{ "name": "Vegeteriana", "price": 13.7 },
+{ "name": "Chicken Pizza", "price": 13.9 },
+{ "name": "Pizza Cecco", "price": 13.4 },
+{ "name": "Pizza Burrata", "price": 14.2 },
+{ "name": "Pizza Chef", "price": 14.9 },
+{ "name": "Pizza Tutto Mare", "price": 14.9 },
+{ "name": "Calzone Spinach", "price": 13.5 },
+{ "name": "Pizza Nduja", "price": 13.9 }
+],
+"PASTA": [
+{ "name": "Spaghetti Bolognese", "price": 12.9 },
+{ "name": "Penne Carbonara", "price": 12.9 },
+{ "name": "Lasagna al Forno", "price": 13.9 },
+{ "name": "Spaghetti Marinara", "price": 15.9 },
+{ "name": "Spaghetti Gamberoni", "price": 15.9 },
+{ "name": "Penne All'Amatriciana", "price": 12.9 },
+{ "name": "Rigatoni alla Bosciaola", "price": 13.9 },
+{ "name": "Spaghetti alla Vongole", "price": 12.9 },
+{ "name": "Rigatoni Aurora", "price": 13.9 },
+{ "name": "Spaghetti Pesto", "price": 11.9 },
+{ "name": "Grilled Fillet of Seabass", "price": 21.5 },
+{ "name": "Grilled Sirloin Steak", "price": 21.9 },
+{ "name": "Chicken Milanese", "price": 18.5 }
+]
+};
 
 let cart = {};
 
@@ -235,32 +334,47 @@ function goConfirm() {
   const customerName = document.getElementById("customerName").value;
   const nameDiv = document.createElement("div");
   nameDiv.id = "summary-name";
-  nameDiv.textContent = customerName || "(No name entered)";
+  nameDiv.textContent = customerName ? customerName : "(No name entered)";
   summary.appendChild(nameDiv);
 
   for (let name in cart) {
     const item = findItem(name);
     const div = document.createElement("div");
     div.className = "summary-item";
-
     const category = Object.keys(data).find(cat => data[cat].some(i => i.name === name));
     const isExtra = category === "EXTRA TOPPINGS";
-
     div.textContent = `${name} x${cart[name]} - £${(item.price * cart[name]).toFixed(2)}${isExtra ? " (Extra toppings)" : ""}`;
     summary.appendChild(div);
   }
-
-  const drinksNote = document.createElement("div");
-  drinksNote.style.marginTop = "20px";
-  drinksNote.style.color = "#ff5c5c";
-  drinksNote.style.fontWeight = "700";
-  drinksNote.textContent = "Drinks not Included";
-  summary.appendChild(drinksNote);
 }
 
 function goBack() {
   document.getElementById("menuScreen").classList.remove("hidden");
   document.getElementById("confirmScreen").classList.add("hidden");
+}
+
+function submitOrder() {
+  const name = document.getElementById("customerName").value;
+  const items = [];
+  let total = 0;
+
+  for (let n in cart) {
+    const item = findItem(n);
+    items.push({ name: n, qty: cart[n], price: item.price });
+    total += cart[n] * item.price;
+  }
+
+  fetch(webhookURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, items, total })
+  }).then(() => {
+    alert("Order submitted!");
+    cart = {};
+    goBack();
+    renderMenu();
+    updateFooter();
+  });
 }
 
 renderMenu();
