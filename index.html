@@ -29,6 +29,10 @@ input { width:100%; padding:12px; margin-bottom:12px; border-radius:12px; border
 .confirm-buttons { display:flex; gap:10px; margin-top:20px; flex-direction: column; }
 .back-btn { background:#2a3236; color:#fff; padding:12px; border-radius:8px; font-weight:700; flex:1; border: 1px solid transparent; }
 .submit-btn { background:#76bf12; color:#fff; padding:12px; border-radius:8px; font-weight:700; width: 100%; margin-top: 10px; }
+ input {
+  /* ... your other input styles ... */
+  text-transform: capitalize; 
+}
 </style>
 </head>
 <body>
@@ -166,6 +170,20 @@ function renderMenu() {
   }
 }
 
+// Function to capitalize first and last names
+function capitalizeName() {
+  const nameInput = document.getElementById("customerName");
+  const words = nameInput.value.split(" ");
+  
+  const capitalizedWords = words.map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  });
+
+  nameInput.value = capitalizedWords.join(" ");
+}
+
+// Add the listener so it triggers the moment they leave the field
+document.getElementById("customerName").addEventListener("blur", capitalizeName);
 function updateQty(name, change) {
   cart[name] = (cart[name] || 0) + change;
   if (cart[name] <= 0) delete cart[name];
