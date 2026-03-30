@@ -337,6 +337,8 @@ function goConfirm() {
   const nameDiv = document.createElement("div");
   nameDiv.id = "summary-name";
   nameDiv.textContent = customerName ? customerName : "(No name entered)";
+  nameDiv.style.textTransform = "uppercase";
+  nameDiv.style.textDecoration = "underline";
   summary.appendChild(nameDiv);
 
   for (let name in cart) {
