@@ -12,7 +12,7 @@ body { font-family: 'PT Sans Narrow', sans-serif; margin:0; background:#121618; 
 h2 { margin-top:24px; background:#ffc850 !important; color:#000; padding:8px 12px; border-radius:8px; font-weight:700; text-transform: uppercase; }
 .item { background:#1D2326; padding:12px; border-radius:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
 .info { max-width:70%; }
-.name { font-weight:700; }
+.name { font-weight:700; font-size: 1.3rem }
 .price { color:#ccc; }
 .controls { display:flex; align-items:center; gap:8px; }
 button { border:none; border-radius:50%; width:36px; height:36px; font-size:18px; cursor:pointer; }
@@ -155,14 +155,13 @@ function renderMenu() {
     data[category].forEach(item => {
       const div = document.createElement("div");
       div.className = "item";
-      // We use single quotes for the outer attribute and double quotes for the function argument
       div.innerHTML = `
         <div class="info">
           <div class="name">${item.name}</div>
           <div class="price">£${item.price.toFixed(2)}</div>
         </div>
         <div class="controls">
-          <button class="remove" onclick='updateQty("${item.name}", -1)'>-</button>
+          <button class="remove" onclick="updateQty('${item.name}', -1)">-</button>
           <span class="qty">${cart[item.name] || 0}</span>
           <button class="add" onclick='updateQty("${item.name}", 1)'>+</button>
         </div>`;
