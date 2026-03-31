@@ -76,7 +76,7 @@ input { width:100%; padding:12px; margin-bottom:12px; border-radius:12px; border
 const data = {
   "ANTIPASTI": [
     { "name": "Avocado Prawns", "price": 9.2 },
-    { "name": "Bruschetta with Burrata and NDuja", "price": 7.9 },
+    { "name": "Bruschetta with Burrata and N'Duja", "price": 7.9 },
     { "name": "Burrata Salad", "price": 9.9 },
     { "name": "Charcuterie Board", "price": 11.9 },
     { "name": "Deep Fried Calamari", "price": 9.6 },
@@ -126,7 +126,7 @@ const data = {
   ],
   "PASTA": [
     { "name": "Lasagna al Forno", "price": 13.9 },
-    { "name": "Penne All Amatriciana", "price": 12.9 },
+    { "name": "Penne All'Amatriciana", "price": 12.9 },
     { "name": "Penne Carbonara", "price": 12.9 },
     { "name": "Rigatoni alla Bosciaola", "price": 13.9 },
     { "name": "Rigatoni Aurora", "price": 13.9 },
@@ -155,13 +155,14 @@ function renderMenu() {
     data[category].forEach(item => {
       const div = document.createElement("div");
       div.className = "item";
+      // We use single quotes for the outer attribute and double quotes for the function argument
       div.innerHTML = `
         <div class="info">
           <div class="name">${item.name}</div>
           <div class="price">£${item.price.toFixed(2)}</div>
         </div>
         <div class="controls">
-          <button class="remove" onclick="updateQty('${item.name}', -1)">-</button>
+          <button class="remove" onclick='updateQty("${item.name}", -1)'>-</button>
           <span class="qty">${cart[item.name] || 0}</span>
           <button class="add" onclick='updateQty("${item.name}", 1)'>+</button>
         </div>`;
