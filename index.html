@@ -218,7 +218,7 @@ function goConfirm() {
   const nameDiv = document.createElement("div");
   nameDiv.id = "summary-name";
   nameDiv.style.color = "#76ba1b";
-  nameDiv.textContent = `CUSTOMER: ${name || "(No name entered)"}`;
+  nameDiv.textContent = `NAME: ${name || "(No name entered)"}`;
   summary.appendChild(nameDiv);
   for (let n in cart) {
     const item = findItem(n);
