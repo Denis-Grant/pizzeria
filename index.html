@@ -148,11 +148,16 @@ let cart = {};
 function renderMenu() {
   const menuDiv = document.getElementById("menu");
   menuDiv.innerHTML = "";
+
   for (let category in data) {
     const h = document.createElement("h2");
     h.textContent = category;
     menuDiv.appendChild(h);
+
     data[category].forEach(item => {
+      // Escape apostrophes so names like N'Duja don't break the onclick
+      const safeName = item.name.replace(/'/g, "\\'");
+
       const div = document.createElement("div");
       div.className = "item";
       div.innerHTML = `
@@ -161,10 +166,11 @@ function renderMenu() {
           <div class="price">£${item.price.toFixed(2)}</div>
         </div>
         <div class="controls">
-          <button class="remove" onclick="updateQty('${item.name}', -1)">-</button>
+          <button class="remove" onclick="updateQty('${safeName}', -1)">-</button>
           <span class="qty">${cart[item.name] || 0}</span>
-          <button class="add" onclick='updateQty("${item.name}", 1)'>+</button>
+          <button class="add" onclick="updateQty('${safeName}', 1)">+</button>
         </div>`;
+      
       menuDiv.appendChild(div);
     });
   }
