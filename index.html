@@ -254,7 +254,9 @@ function goConfirm() {
   const customerName = document.getElementById("customerName").value.trim();
   
   const heading = document.getElementById("confirmHeading");
-  heading.textContent = customerName ? `${customerName} Order` : "Order Details";
+  heading.textContent = customerName 
+  ? (customerName.trim().toLowerCase().endsWith('s') ? `${customerName}' Order` : `${customerName}'s Order`)
+  : "Order Details";
 
   const summary = document.getElementById("summary");
   summary.innerHTML = "";
