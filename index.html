@@ -253,15 +253,9 @@ function goConfirm() {
 
   const customerName = document.getElementById("customerName").value.trim();
   
-  // Dynamic heading
   const heading = document.getElementById("confirmHeading");
-  if (customerName) {
-    heading.textContent = `${customerName}'s Order`;
-  } else {
-    heading.textContent = "Order Details";
-  }
+  heading.textContent = customerName ? `${customerName} Order` : "Order Details";
 
-  // Rest of your summary
   const summary = document.getElementById("summary");
   summary.innerHTML = "";
 
