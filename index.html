@@ -259,11 +259,11 @@ function goConfirm() {
   const summary = document.getElementById("summary");
   summary.innerHTML = "";
 
-  const nameDiv = document.createElement("div");
-  nameDiv.id = "summary-name";
-  nameDiv.style.color = "#76ba1b";
-  nameDiv.textContent = `NAME: ${customerName || "(No name entered)"}`;
-  summary.appendChild(nameDiv);
+  // const nameDiv = document.createElement("div");
+  // nameDiv.id = "summary-name";
+  // nameDiv.style.color = "#76ba1b";
+  // nameDiv.textContent = `NAME: ${customerName || "(No name entered)"}`;
+  // summary.appendChild(nameDiv);
 
   for (let n in cart) {
     const item = findItem(n);
