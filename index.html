@@ -282,12 +282,32 @@ window.onload = () => {
   renderMenu();
   updateFooter();
 };
- function confirmDelete() {
+function confirmDelete() {
+  // Clear everything in memory
   cart = {};
   document.getElementById("orderNotes").value = "";
+
+  // IMPORTANT: Also remove the saved order from localStorage
+  localStorage.removeItem("pizzeria_saved_order");
+
+  // Refresh UI
   renderMenu();
   updateFooter();
   goBack();
+ 
+  // Show feedback
+  const toast = document.getElementById("statusToast");
+  toast.textContent = "Order Deleted!";
+  toast.style.background = "#e85d5d";   // red for delete
+  toast.style.display = "block";
+  
+  setTimeout(() => {
+    toast.style.display = "none";
+    toast.textContent = "Order Saved!";   // reset text for future use
+    toast.style.background = "#76ba1b";   // reset to green
+  }, 2000);
+ 
+  // Close modal
   document.getElementById("deleteConfirmModal").style.display = "none";
 }
 
