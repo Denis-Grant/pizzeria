@@ -214,9 +214,6 @@ function findItem(name) {
     if (item) return item;
   }
 }
-
-goConfirm
-
 function goBack() {
   document.getElementById("menuScreen").classList.remove("hidden");
   document.getElementById("confirmScreen").classList.add("hidden");
@@ -250,6 +247,38 @@ function loadSavedOrder() {
   }
 }
 
+function goConfirm() {
+  document.getElementById("menuScreen").classList.add("hidden");
+  document.getElementById("confirmScreen").classList.remove("hidden");
+
+  const customerName = document.getElementById("customerName").value.trim();
+  
+  // Dynamic heading
+  const heading = document.getElementById("confirmHeading");
+  if (customerName) {
+    heading.textContent = `${customerName}'s Order`;
+  } else {
+    heading.textContent = "Order Details";
+  }
+
+  // Rest of your summary
+  const summary = document.getElementById("summary");
+  summary.innerHTML = "";
+
+  const nameDiv = document.createElement("div");
+  nameDiv.id = "summary-name";
+  nameDiv.style.color = "#76ba1b";
+  nameDiv.textContent = `NAME: ${customerName || "(No name entered)"}`;
+  summary.appendChild(nameDiv);
+
+  for (let n in cart) {
+    const item = findItem(n);
+    const div = document.createElement("div");
+    div.className = "summary-item";
+    div.textContent = `${n} x ${cart[n]} - £${(item.price * cart[n]).toFixed(2)}`;
+    summary.appendChild(div);
+  }
+}
 function showNameReminder() {
   if (!document.getElementById("customerName").value.trim()) {
     const reminder = document.getElementById("nameReminder");
