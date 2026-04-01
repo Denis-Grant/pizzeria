@@ -33,12 +33,9 @@ input { width:100%; padding:12px; margin-bottom:12px; border-radius:12px; border
   /* ... your other input styles ... */
   text-transform: capitalize; 
 }
-#deleteModal {
-  display: none !important; /* Ensures it starts hidden */
-}
 </style>
 </head>
-
+<body>
 
 <div id="nameReminder" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#3498db; color:white; padding:12px 24px; border-radius:30px; z-index:2000; font-weight:700; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
   Please add your name
@@ -243,23 +240,12 @@ function goBack() {
   document.getElementById("confirmScreen").classList.add("hidden");
 }
 
-// This replaces your old deleteOrder function
 function deleteOrder() {
-  // Instead of deleting immediately, we just show the modal
-  document.getElementById("deleteModal").style.display = "flex";
-}
-
-function closeDeleteModal() {
-  document.getElementById("deleteModal").style.display = "none";
-}
-
-function confirmDelete() {
-  cart = {}; // Clears the cart [cite: 39]
-  document.getElementById("orderNotes").value = ""; // Clears the notes [cite: 39]
-  renderMenu(); // Refreshes the display [cite: 39]
-  updateFooter(); // Resets the total to £0.00 [cite: 39]
-  closeDeleteModal(); // Hides the pop-up
-  goBack(); // Returns to the menu screen [cite: 39]
+  cart = {};
+  document.getElementById("orderNotes").value = "";
+  renderMenu();
+  updateFooter();
+  goBack();
 }
 
 function saveOrder() {
@@ -301,15 +287,5 @@ window.onload = () => {
   updateFooter();
 };
 </script>
-<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:3000; display:flex; align-items:center; justify-content:center;">
-  <div style="background:#1D2326; padding:30px; border-radius:15px; border:2px solid #ffc850; width:85%; max-width:400px; text-align:center;">
-    <h3 style="margin-top:0; color:#ffc850;">Delete Order?</h3>
-    <p style="color:#fff; margin-bottom:25px;">This will clear your entire cart and notes. Are you sure?</p>
-    <div style="display:flex; gap:15px;">
-      <button onclick="closeDeleteModal()" style="flex:1; padding:12px; border-radius:8px; border:none; background:#333; color:#fff; font-weight:700; cursor:pointer;">NO</button>
-      <button onclick="confirmDelete()" style="flex:1; padding:12px; border-radius:8px; border:none; background:#e85d5d; color:#fff; font-weight:700; cursor:pointer;">YES, DELETE</button>
-    </div>
-  </div>
-</div>
 </body>
 </html>
